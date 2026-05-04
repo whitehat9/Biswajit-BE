@@ -68,26 +68,6 @@ app.use("/api/press", pressRoutes);
 app.use("/api/visitor", visitorRoutes);
 app.use("/api/categories", categoryRoutes);
 
-// Global error handling middleware
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error("Global error handler:", {
-    message: err.message,
-    stack: err.stack,
-    url: req.url,
-    method: req.method,
-    timestamp: new Date().toISOString(),
-  });
-
-  res.status(500).json({
-    success: false,
-    error: "Something went wrong!",
-    message:
-      process.env.NODE_ENV === "development"
-        ? err.message
-        : "Internal server error",
-  });
-});
-
 // Centralized Error Handler
 app.use(routeNotFound);
 app.use(errorHandler);
